@@ -47,3 +47,7 @@ subscribed_instances:
 
 - Boost trending posts from other Mastodon instances
 - Update bot profile with list of subscribed instances
+
+---
+  
+<a rel="me" href="https://mastodon.keks.club/@hype">Hype on Mastodon</a>
