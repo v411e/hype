@@ -1,8 +1,8 @@
 version: "3"
 services:
   hype:
-    build:
-      context: .
-    image: hype:latest
+    # build:
+    #   context: .
+    image: valentinriess/hype:latest
     volumes:
-      - ./prod-config:/app/config
+      - ./config:/app/config
