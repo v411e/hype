@@ -1,0 +1,8 @@
+version: "3"
+services:
+  hype:
+    build:
+      context: .
+    image: hype:latest
+    volumes:
+      - ./prod-config:/app/config

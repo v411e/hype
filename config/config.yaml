@@ -1,0 +1,17 @@
+# Credentials for your bot account
+bot_account:
+  server: ""
+  email: ""
+  password: ""
+
+# Refresh interval in minutes
+interval: 60
+
+# Define subscribed instances and 
+# their individual limit (top n trending posts)
+# which is again limited by the API to max 20
+subscribed_instances:
+  chaos.social:
+    limit: 20
+  mastodon.social:
+    limit: 5

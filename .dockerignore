@@ -1,0 +1,6 @@
+__pycache__
+.vscode
+.venv
+*.secret
+/secrets
+config-prod.yaml
