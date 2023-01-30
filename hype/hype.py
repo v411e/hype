@@ -40,23 +40,36 @@ class Hype:
     def boost(self):
         self.log.info("Run boost")
         for instance in self.config.subscribed_instances:
-            # Create mastodon API client
-            mastodon_client = self.init_client(instance.name)
-            # Fetch statuses from every subscribed instance
-            trending_statuses = mastodon_client.trending_statuses()[: instance.limit]
-            counter = 0
-            for trending_status in trending_statuses:
-                counter += 1
-                # Get snowflake-id of status on the instance where the status will be boosted
-                status = self.client.search_v2(
-                    trending_status["uri"], result_type="statuses"
-                )["statuses"][0]
-                # Boost if not already boosted
-                already_boosted = status["reblogged"]
-                if not already_boosted:
-                    self.client.status_reblog(status)
-                self.log.info(
-                    f"{instance.name}: {counter}/{len(trending_statuses)} {'ignore' if already_boosted else 'boost'}"
+            try:
+                # Create mastodon API client
+                mastodon_client = self.init_client(instance.name)
+                # Fetch statuses from every subscribed instance
+                trending_statuses = mastodon_client.trending_statuses()[
+                    : instance.limit
+                ]
+                counter = 0
+                for trending_status in trending_statuses:
+                    counter += 1
+                    # Get snowflake-id of status on the instance where the status will be boosted
+                    status = self.client.search_v2(
+                        trending_status["uri"], result_type="statuses"
+                    )["statuses"]
+                    if len(status) > 0:
+                        status = status[0]
+                        # Boost if not already boosted
+                        already_boosted = status["reblogged"]
+                        if not already_boosted:
+                            self.client.status_reblog(status)
+                        self.log.info(
+                            f"{instance.name}: {counter}/{len(trending_statuses)} {'ignore' if already_boosted else 'boost'}"
+                        )
+                    else:
+                        self.log.warning(
+                            f"{instance.name}: {counter}/{len(trending_statuses)} could not find post by id"
+                        )
+            except Exception as e:
+                self.log.error(
+                    f"{instance.name}: Could not fetch instance. Sorry. - {e}"
                 )
 
     def start(self):
