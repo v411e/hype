@@ -1,3 +1,4 @@
+![](./res/hype_header.png)
 # hype
 This Mastodon bot transfers the trends from other instances directly to your personal timeline. You decide which instances it fetches and how much you want to see per instance.
 
@@ -46,3 +47,7 @@ subscribed_instances:
 
 - Boost trending posts from other Mastodon instances
 - Update bot profile with list of subscribed instances
+
+---
+  
+<a rel="me" href="https://mastodon.keks.club/@hype">Hype on Mastodon</a>
