@@ -34,7 +34,7 @@ class Hype:
         note = f"""{self.config.profile_prefix}
         {subscribed_instances_list}
         """
-        fields = [(key, value) for key, value in self.config.fields.items]
+        fields = [(key, value) for key, value in self.config.fields.items()]
         self.client.account_update_credentials(
             note=note, bot=True, discoverable=True, fields=fields
         )
