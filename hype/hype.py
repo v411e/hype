@@ -1,4 +1,6 @@
-import time, schedule, time, logging
+import time
+import schedule
+import logging
 from mastodon import Mastodon
 from config import Config
 import os.path
@@ -29,10 +31,10 @@ class Hype:
         subscribed_instances_list = "\n".join(
             [f"- {instance}" for instance in self.config.subscribed_instances]
         )
-        note = f"""I am boosting trending posts from:
+        note = f"""{self.config.profile_prefix}
         {subscribed_instances_list}
         """
-        fields = [("Github", "https://github.com/v411e/hype")]
+        fields = [(key, value) for key, value in self.config.fields.items()]
         self.client.account_update_credentials(
             note=note, bot=True, discoverable=True, fields=fields
         )

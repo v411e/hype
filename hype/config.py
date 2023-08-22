@@ -34,6 +34,8 @@ class Config:
     interval: int = 60  # minutes
     log_level: str = "INFO"
     subscribed_instances: List = []
+    profile_prefix: str = ""
+    fields: dict = {}
 
     def __init__(self):
         # auth file containing login info
@@ -71,6 +73,19 @@ class Config:
                 self.log_level = (
                     config["log_level"] if config.get("log_level") else self.log_level
                 )
+
+                self.profile_prefix = (
+                    config["profile_prefix"]
+                    if config.get("profile_prefix")
+                    else self.profile_prefix
+                )
+
+                self.fields = (
+                    {name: value for name, value in config["fields"].items()}
+                    if config.get("fields")
+                    else {}
+                )
+
                 self.subscribed_instances = (
                     [
                         Instance(name, props["limit"])
