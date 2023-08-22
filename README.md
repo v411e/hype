@@ -2,7 +2,7 @@
 
 # hype
 
-This Mastodon bot transfers the trends from other instances directly to your personal timeline. You decide which instances it fetches and how much you want to see per instance. (Forked from Valentin Reiss' !(https://github.com/v411e/hype)[https://github.com/v411e/hype])
+This Mastodon bot transfers the trends from other instances directly to your personal timeline. You decide which instances it fetches and how much you want to see per instance. (Forked from Valentin Reiss' [https://github.com/v411e/hype](https://github.com/v411e/hype))
 
 ## Why
 
@@ -23,7 +23,7 @@ services:
 
 ## Configuration
 
-Create a `config.yaml` and a `auth.yaml` file in `./config/`. Enter the credentials of your bot-account into `auth.yaml`. You can define which servers to follow and how often to fetch new posts in config.yaml. See the example below:
+Create a `config.yaml` and a `auth.yaml` file in `./config/`. Enter the credentials of your bot-account into `auth.yaml`. You can define which servers to follow and how often to fetch new posts as well as how to automatically change your profile in config.yaml. See the examples below:
 
 `auth.yaml`:
 
@@ -40,6 +40,14 @@ bot_account:
 ```yaml
 # Refresh interval in minutes
 interval: 60
+
+# Text to add to the bot profile befor the list of subscribed servers
+profile_prefix: "I am boosting trending posts from:"
+
+# profile fields to fill in
+fields:
+  code: https://github.com/tante/hype
+  operator: "YOUR HANDLE HERE"
 
 # Define subscribed instances and
 # their individual limit (top n trending posts)
