@@ -34,7 +34,7 @@ class Hype:
         note = f"""{self.config.profile_prefix}
         {subscribed_instances_list}
         """
-        fields = [(key, value) for key, value in self.config.fields.items()]
+        fields = [(key, value) for key, value in self.config.fields.items]
         self.client.account_update_credentials(
             note=note, bot=True, discoverable=True, fields=fields
         )
@@ -52,7 +52,7 @@ class Hype:
                 counter = 0
                 for trending_status in trending_statuses:
                     counter += 1
-                    # Get snowflake-id of status on the instance where the status will be boosted
+                    # Get snowflake-id of status on the instance where the status will be boosted  # noqa: E501
                     status = self.client.search_v2(
                         trending_status["uri"], result_type="statuses"
                     )["statuses"]
