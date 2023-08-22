@@ -1,5 +1,6 @@
 from typing import List
-import yaml, logging
+import yaml
+import logging
 
 
 class BotAccount:
@@ -35,11 +36,15 @@ class Config:
     subscribed_instances: List = []
 
     def __init__(self):
-        path = "/app/config/config.yaml"
-        # path = "../config/config-prod.yaml"
-        with open(path, "r") as configfile:
+        # auth file containing login info
+        auth = "/app/config/auth.yaml"
+        # settings file containing subscriptions
+        conf = "/app/config/config.yaml"
+
+        # only load auth info
+        with open(auth, "r") as configfile:
             config = yaml.load(configfile, Loader=yaml.Loader)
-            logging.getLogger("Config").debug("Load config")
+            logging.getLogger("Config").debug("Loading auth info")
             if (
                 config
                 and config.get("bot_account")
@@ -55,20 +60,25 @@ class Config:
             else:
                 logging.getLogger("Config").error(config)
                 raise ConfigException("Bot account config is incomplete or missing.")
-            self.interval = (
-                config["interval"] if config.get("interval") else self.interval
-            )
-            self.log_level = (
-                config["log_level"] if config.get("log_level") else self.log_level
-            )
-            self.subscribed_instances = (
-                [
-                    Instance(name, props["limit"])
-                    for name, props in config["subscribed_instances"].items()
-                ]
-                if config.get("subscribed_instances")
-                else []
-            )
+
+        with open(conf, "r") as configfile:
+            config = yaml.load(configfile, Loader=yaml.Loader)
+            logging.getLogger("Config").debug("Loading settings")
+            if config:
+                self.interval = (
+                    config["interval"] if config.get("interval") else self.interval
+                )
+                self.log_level = (
+                    config["log_level"] if config.get("log_level") else self.log_level
+                )
+                self.subscribed_instances = (
+                    [
+                        Instance(name, props["limit"])
+                        for name, props in config["subscribed_instances"].items()
+                    ]
+                    if config.get("subscribed_instances")
+                    else []
+                )
 
 
 class ConfigException(Exception):
