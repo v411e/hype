@@ -34,6 +34,7 @@ class Config:
     interval: int = 60  # minutes
     log_level: str = "INFO"
     subscribed_instances: List = []
+    filtered_instances: List = []
     profile_prefix: str = ""
     fields: dict = {}
 
@@ -92,6 +93,14 @@ class Config:
                         for name, props in config["subscribed_instances"].items()
                     ]
                     if config.get("subscribed_instances")
+                    else []
+                )
+
+                self.filtered_instances = (
+                    [
+                        name for name in config["filtered_instances"].items()
+                    ]
+                    if config.get("filtered_instances")
                     else []
                 )
 

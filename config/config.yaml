@@ -17,3 +17,11 @@ subscribed_instances:
     limit: 5
   mastodon.social:
     limit: 5
+
+# Posts originating from filtered instances will never be reposted.
+# The filter checks for the instance of the original posting account, not the
+# server that marked it as a popular post.
+# This can be used to filter out abusive instances as well as protect small
+# instances who could be overwhelmed with a repost to a significant amount of
+# other instances
+filtered_instances:

@@ -58,12 +58,20 @@ class Hype:
                     )["statuses"]
                     if len(status) > 0:
                         status = status[0]
+                        # check if post comes from a filtered instance
+                        source_account = status["account"]["acct"].split("@")
+                        server = (
+                            source_account[2]
+                            if len(source_account) == 2
+                            else source_account[1]
+                        )
+                        filtered = server in self.config.filtered_instances
                         # Boost if not already boosted
                         already_boosted = status["reblogged"]
-                        if not already_boosted:
+                        if not already_boosted and not filtered:
                             self.client.status_reblog(status)
                         self.log.info(
-                            f"{instance.name}: {counter}/{len(trending_statuses)} {'ignore' if already_boosted else 'boost'}"
+                            f"{instance.name}: {counter}/{len(trending_statuses)} {'ignore' if (already_boosted or filtered)  else 'boost'}"
                         )
                     else:
                         self.log.warning(
