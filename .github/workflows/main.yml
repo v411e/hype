@@ -1,0 +1,55 @@
+name: Build and push Docker images
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-push-docker-image:
+    name: Build Docker image and push to repositories
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build image and push to Docker Hub and GitHub Container Registry
+        uses: docker/build-push-action@v3
+        id: docker_build
+        if: ${{ github.ref_name != 'main' }}
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: .
+          # Note: tags has to be all lower-case
+          tags: |
+            valentinriess/hype:${{ github.ref_name }}
+          # build on feature branches, push only on develop branch
+          push: ${{ github.ref == 'refs/heads/develop' }}
+
+      - name: Image digest
+        if: ${{ steps.docker_build.outcome == 'success' }}
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - name: Build image and push to Docker Hub and GitHub Container Registry
+        uses: docker/build-push-action@v2
+        id: docker_build_main
+        if: ${{ github.ref_name == 'main' }}
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: .
+          # Note: tags has to be all lower-case
+          tags: |
+            valentinriess/hype:latest
+          # build on feature branches, push only on develop branch
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Image digest
+        if: ${{ steps.docker_build_main.outcome == 'success' }}
+        run: echo ${{ steps.docker_build_main.outputs.digest }}
