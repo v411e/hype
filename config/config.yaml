@@ -25,3 +25,4 @@ subscribed_instances:
 # instances who could be overwhelmed with a repost to a significant amount of
 # other instances
 filtered_instances:
+  - example.com

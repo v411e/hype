@@ -98,7 +98,7 @@ class Config:
 
                 self.filtered_instances = (
                     [
-                        name for name in config["filtered_instances"].items()
+                        name for name in config["filtered_instances"]
                     ]
                     if config.get("filtered_instances")
                     else []
