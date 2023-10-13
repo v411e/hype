@@ -3,6 +3,6 @@ services:
   hype:
     # build:
     #   context: .
-    image: t4nte/hype:latest
+    image: valentinriess/hype:latest
     volumes:
       - ./config:/app/config

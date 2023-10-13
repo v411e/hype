@@ -2,7 +2,7 @@
 
 # hype
 
-This Mastodon bot transfers the trends from other instances directly to your personal timeline. You decide which instances it fetches and how much you want to see per instance. (Forked from Valentin Reiss' [https://github.com/v411e/hype](https://github.com/v411e/hype))
+This Mastodon bot transfers the trends from other instances directly to your personal timeline. You decide which instances it fetches and how much you want to see per instance.
 
 ## Why
 
@@ -16,7 +16,7 @@ Deploy with docker-compose
 version: "3"
 services:
   hype:
-    image: t4nte/hype:latest
+    image: valentinriess/hype:latest
     volumes:
       - ./config:/app/config
 ```
