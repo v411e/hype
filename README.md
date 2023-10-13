@@ -57,6 +57,10 @@ subscribed_instances:
     limit: 20
   mastodon.social:
     limit: 5
+
+# Filter posts from specific instances
+filtered_instances:
+  - example.com
 ```
 
 ## Features
