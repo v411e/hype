@@ -60,11 +60,7 @@ class Hype:
                         status = status[0]
                         # check if post comes from a filtered instance
                         source_account = status["account"]["acct"].split("@")
-                        server = (
-                            source_account[2]
-                            if len(source_account) == 2
-                            else source_account[1]
-                        )
+                        server = source_account[-1]
                         filtered = server in self.config.filtered_instances
                         # Boost if not already boosted
                         already_boosted = status["reblogged"]
