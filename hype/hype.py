@@ -1,4 +1,6 @@
-import time, schedule, time, logging
+import time
+import schedule
+import logging
 from mastodon import Mastodon
 from config import Config
 import os.path
@@ -29,10 +31,10 @@ class Hype:
         subscribed_instances_list = "\n".join(
             [f"- {instance}" for instance in self.config.subscribed_instances]
         )
-        note = f"""I am boosting trending posts from:
+        note = f"""{self.config.profile_prefix}
         {subscribed_instances_list}
         """
-        fields = [("Github", "https://github.com/v411e/hype")]
+        fields = [(key, value) for key, value in self.config.fields.items()]
         self.client.account_update_credentials(
             note=note, bot=True, discoverable=True, fields=fields
         )
@@ -50,18 +52,22 @@ class Hype:
                 counter = 0
                 for trending_status in trending_statuses:
                     counter += 1
-                    # Get snowflake-id of status on the instance where the status will be boosted
+                    # Get snowflake-id of status on the instance where the status will be boosted  # noqa: E501
                     status = self.client.search_v2(
                         trending_status["uri"], result_type="statuses"
                     )["statuses"]
                     if len(status) > 0:
                         status = status[0]
+                        # check if post comes from a filtered instance
+                        source_account = status["account"]["acct"].split("@")
+                        server = source_account[-1]
+                        filtered = server in self.config.filtered_instances
                         # Boost if not already boosted
                         already_boosted = status["reblogged"]
-                        if not already_boosted:
+                        if not already_boosted and not filtered:
                             self.client.status_reblog(status)
                         self.log.info(
-                            f"{instance.name}: {counter}/{len(trending_statuses)} {'ignore' if already_boosted else 'boost'}"
+                            f"{instance.name}: {counter}/{len(trending_statuses)} {'ignore' if (already_boosted or filtered)  else 'boost'}"
                         )
                     else:
                         self.log.warning(

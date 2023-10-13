@@ -9,6 +9,9 @@ RUN pip install -r requirements.txt
 
 VOLUME /app/config
 
-COPY ./config /app
+RUN mkdir -p /app/config/
+RUN mkdir -p /app/secrets/
+
+COPY ./config/* /app/config/
 
 ENTRYPOINT ["python", "/app/main.py"]
