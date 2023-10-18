@@ -1,5 +1,5 @@
-from hype import Hype
-from config import Config
+from .config import Config
+from .hype import Hype
 
 bot = Hype(Config())
 bot.login()

@@ -1,9 +1,11 @@
-import time
-import schedule
 import logging
-from mastodon import Mastodon
-from config import Config
 import os.path
+import time
+
+import schedule
+from mastodon import Mastodon
+
+from .config import Config
 
 
 class Hype:
