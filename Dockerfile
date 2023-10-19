@@ -3,7 +3,7 @@ FROM python:3-alpine
 WORKDIR /app
 
 COPY requirements.txt /app/requirements.txt
-COPY ./hype /app
+COPY ./hype /app/hype
 
 RUN pip install -r requirements.txt
 
@@ -14,4 +14,4 @@ RUN mkdir -p /app/secrets/
 
 COPY ./config/* /app/config/
 
-ENTRYPOINT ["python", "/app/main.py"]
+ENTRYPOINT ["python", "-m", "hype"]

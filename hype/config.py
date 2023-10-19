@@ -1,6 +1,7 @@
-from typing import List
-import yaml
 import logging
+from typing import List
+
+import yaml
 
 
 class BotAccount:
