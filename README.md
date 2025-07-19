@@ -10,16 +10,7 @@ For smaller instances the local timeline is rather empty. This is why trends sim
 
 ## Installation
 
-Deploy with docker-compose
-
-```yaml
-version: "3"
-services:
-  hype:
-    image: valentinriess/hype:latest
-    volumes:
-      - ./config:/app/config
-```
+This forked version is made to run directly through `python hype.py` instead of within a docker container. I personally run it as a service on my machine.
 
 ## Configuration
 

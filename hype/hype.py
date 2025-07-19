@@ -5,7 +5,7 @@ import time
 import schedule
 from mastodon import Mastodon
 
-from .config import Config
+from config import Config
 
 
 class Hype:
@@ -21,12 +21,8 @@ class Hype:
 
     def login(self):
         self.client = self.init_client(self.config.bot_account.server)
-        self.log.info(f"Logging in to {self.config.bot_account.server}")
-        self.client.log_in(
-            self.config.bot_account.email,
-            self.config.bot_account.password,
-            to_file=f"secrets/{self.config.bot_account.server}_usercred.secret",
-        )
+        self.log.info(f"Loading access token for {self.config.bot_account.server}")
+        self.client.access_token = self.config.bot_account.password
 
     def update_profile(self):
         self.log.info("Update bot profile")
@@ -89,7 +85,10 @@ class Hype:
             time.sleep(1)
 
     def init_client(self, instance_name: str) -> Mastodon:
-        secret_path = f"secrets/{instance_name}_clientcred.secret"
+        secrets_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "secrets")
+        os.makedirs(secrets_dir, exist_ok=True)  # ensure it's created
+
+        secret_path = os.path.join(secrets_dir, f"{instance_name}_clientcred.secret")
         if not os.path.isfile(secret_path):
             self.log.info(f"Initialize client for {instance_name}")
             Mastodon.create_app(
@@ -99,7 +98,15 @@ class Hype:
             )
         else:
             self.log.info(f"Client for {instance_name} is already initialized.")
+
         return Mastodon(
             client_id=secret_path,
             ratelimit_method="pace",
         )
+
+if __name__ == "__main__":
+    config = Config()
+    bot = Hype(config)
+    bot.login()
+    bot.update_profile()
+    bot.start()

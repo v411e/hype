@@ -2,6 +2,7 @@ import logging
 from typing import List
 
 import yaml
+import os
 
 
 class BotAccount:
@@ -15,7 +16,7 @@ class BotAccount:
         self.password = password
 
     def __repr__(self) -> str:
-        return f"server: {self.server}, email: {self.email}, password: {self.password}"
+        return f"server: {self.server}, email: {self.email}, password: [REDACTED]"
 
 
 class Instance:
@@ -32,7 +33,7 @@ class Instance:
 
 class Config:
     bot_account: BotAccount
-    interval: int = 60  # minutes
+    interval: int = 30  # minutes
     log_level: str = "INFO"
     subscribed_instances: List = []
     filtered_instances: List = []
@@ -40,10 +41,11 @@ class Config:
     fields: dict = {}
 
     def __init__(self):
+        basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         # auth file containing login info
-        auth = "/app/config/auth.yaml"
+        auth = os.path.join(basedir, "config", "auth.yaml")
         # settings file containing subscriptions
-        conf = "/app/config/config.yaml"
+        conf = os.path.join(basedir, "config", "config.yaml")
 
         # only load auth info
         with open(auth, "r") as configfile:
