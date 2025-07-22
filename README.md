@@ -45,7 +45,7 @@ profile_prefix: "I am boosting trending posts from:"
 
 # profile fields to fill in
 fields:
-  code: https://github.com/tante/hype
+  code: https://github.com/v411e/hype
   operator: "YOUR HANDLE HERE"
 
 # Define subscribed instances and
