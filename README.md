@@ -31,8 +31,7 @@ Create a `config.yaml` and a `auth.yaml` file in `./config/`. Enter the credenti
 # Credentials for your bot account
 bot_account:
   server: "mastodon.example.com"
-  email: "hypebot@example.com"
-  password: "averylongandsecurepassword"
+  access_token: "Create a new application in your bot account at Preferences -> Development"
 ```
 
 `config.yaml`
@@ -46,7 +45,7 @@ profile_prefix: "I am boosting trending posts from:"
 
 # profile fields to fill in
 fields:
-  code: https://github.com/tante/hype
+  code: https://github.com/v411e/hype
   operator: "YOUR HANDLE HERE"
 
 # Define subscribed instances and

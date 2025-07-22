@@ -6,16 +6,14 @@ import yaml
 
 class BotAccount:
     server: str
-    email: str
-    password: str
+    access_token: str
 
-    def __init__(self, server: str, email: str, password: str) -> None:
+    def __init__(self, server: str, access_token: str) -> None:
         self.server = server
-        self.email = email
-        self.password = password
+        self.access_token = access_token
 
     def __repr__(self) -> str:
-        return f"server: {self.server}, email: {self.email}, password: {self.password}"
+        return f"server: {self.server}, access_token: {self.access_token}"
 
 
 class Instance:
@@ -53,13 +51,11 @@ class Config:
                 config
                 and config.get("bot_account")
                 and config["bot_account"].get("server")
-                and config["bot_account"].get("email")
-                and config["bot_account"].get("password")
+                and config["bot_account"].get("access_token")
             ):
                 self.bot_account = BotAccount(
                     server=config["bot_account"]["server"],
-                    email=config["bot_account"]["email"],
-                    password=config["bot_account"]["password"],
+                    access_token=config["bot_account"]["access_token"],
                 )
             else:
                 logging.getLogger("Config").error(config)
