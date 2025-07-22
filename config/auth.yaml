@@ -1,5 +1,4 @@
 # Credentials for your bot account
 bot_account:
   server: ""
-  email: ""
-  password: ""
+  access_token: ""
